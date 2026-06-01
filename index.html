@@ -9,6 +9,29 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.addEventListener('error', function(event) {
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = '<div style="padding: 20px; background: #fee2e2; color: #991b1b; font-family: monospace; border: 1px solid #f87171; margin: 20px; border-radius: 8px; text-align: left;">' +
+            '<h3>Client-Side Error Captured</h3>' +
+            '<p><strong>Message:</strong> ' + event.message + '</p>' +
+            '<p><strong>Filename:</strong> ' + event.filename + '</p>' +
+            '<p><strong>Line:</strong> ' + event.lineno + ', <strong>Col:</strong> ' + event.colno + '</p>' +
+            (event.error && event.error.stack ? '<pre style="white-space: pre-wrap; margin-top: 10px; background: #fca5a5; padding: 10px; border-radius: 4px;">' + event.error.stack + '</pre>' : '') +
+            '</div>';
+        }
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = '<div style="padding: 20px; background: #fee2e2; color: #991b1b; font-family: monospace; border: 1px solid #f87171; margin: 20px; border-radius: 8px; text-align: left;">' +
+            '<h3>Unhandled Promise Rejection</h3>' +
+            '<p><strong>Reason:</strong> ' + event.reason + '</p>' +
+            '</div>';
+        }
+      });
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
